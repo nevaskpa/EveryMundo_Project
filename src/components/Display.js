@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Delete from "./Delete";
 import Edit from "./Edit";
+import { sortByCountries, sortByCurrencies } from "../utils/sort";
+import { compareCountries } from "../utils/compare";
+import ExportCSV from "./ExportCSV";
 
 function Display({ data, setData, currencyMap }) {
+  const countrySort = useRef(false);
+  const currencySort = useRef(false);
+  const [sortedData, setSortedData] = useState([...data]);
+
   const displayCurrency = (currency, format, position, amount, delimiter) => {
     let finalCurrency = "";
 
@@ -26,12 +33,41 @@ function Display({ data, setData, currencyMap }) {
     }
   };
 
+  const handleSortByCountries = () => {
+    let newData = [];
+    countrySort.current = true;
+    if (countrySort.current) {
+      newData = sortByCountries(data);
+      setSortedData([...newData]);
+    } else {
+      setSortedData([...data]);
+    }
+    setData(data);
+  };
+
+  const handleSortByCurrencies = () => {
+    let newData = [];
+    currencySort.current = true;
+    if (currencySort.current) {
+      newData = sortByCurrencies(data);
+      setSortedData([...newData]);
+    } else {
+      setSortedData([...data]);
+    }
+    setData(data);
+  };
+
   return (
     <table>
       <tr>
         <th>Amount</th>
         <th>Country</th>
         <th>Options</th>
+        <th>
+          <button onClick={handleSortByCountries}>Sort by Country</button>
+          <button onClick={handleSortByCurrencies}>Sort by Currency</button>
+          <ExportCSV data={data} />
+        </th>
       </tr>
       {data.map((obj, index) => (
         <tr key={index}>

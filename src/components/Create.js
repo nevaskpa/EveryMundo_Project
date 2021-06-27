@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Form from "./Form";
 
 function Create({ data, setData }) {
   const [amount, setAmount] = useState();
@@ -9,25 +8,6 @@ function Create({ data, setData }) {
   const [format, setFormat] = useState("symbol");
   const [position, setPosition] = useState("before");
   const [delimiter, setDelimiter] = useState("comma");
-
-  const setters = {
-    setAmount: setAmount,
-    setFormat: setFormat,
-    setCountry: setCountry,
-    setCurrency: setCurrency,
-    setShowCents: setShowCents,
-    setPosition: setPosition,
-    setDelimiter: setDelimiter,
-  };
-  const values = [
-    amount,
-    format,
-    country,
-    currency,
-    showCents,
-    position,
-    delimiter,
-  ];
 
   const onSubmit = () => {
     let newData = [
@@ -47,7 +27,69 @@ function Create({ data, setData }) {
     setCountry("");
     setCurrency("");
   };
-  return <Form setters={setters} values={values} onSubmit={onSubmit} />;
+  return (
+    <div>
+      <input
+        type="text"
+        onChange={(e) => setAmount(e.target.value)}
+        placeholder="Amount"
+        value={amount}
+      />
+      <input
+        type="text"
+        onChange={(e) => setCurrency(e.target.value)}
+        placeholder="Currency"
+        value={currency}
+      />
+      <input
+        type="text"
+        onChange={(e) => setCountry(e.target.value)}
+        placeholder="Country"
+        value={country}
+      />
+      <br />
+      <label>
+        {" "}
+        Set cents
+        <input
+          type="checkbox"
+          checked={showCents}
+          onChange={(e) => setShowCents(e.target.checked)}
+        />
+      </label>
+      <label>
+        {" "}
+        Show currency as:{" "}
+        <select value={format} onChange={(e) => setFormat(e.target.value)}>
+          <option value="symbol">Symbol</option>
+          <option value="code">Code</option>
+        </select>
+      </label>
+      <br />
+      <label>
+        {" "}
+        Currency position:{" "}
+        <select value={position} onChange={(e) => setPosition(e.target.value)}>
+          <option value="before">Before</option>
+          <option value="after">After</option>
+        </select>
+      </label>
+      <br />
+      <label>
+        {" "}
+        Display Format:{" "}
+        <select
+          value={delimiter}
+          onChange={(e) => setDelimiter(e.target.value)}
+        >
+          <option value="comma">#,###.##</option>
+          <option value="dot">#.###,##</option>
+        </select>
+      </label>
+      <br />
+      <button onClick={onSubmit}>Submit</button>
+    </div>
+  );
 }
 
 export default Create;
