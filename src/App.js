@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Create from "./components/Create";
 import Display from "./components/Display";
+import Header from "./components/Header";
 import { getCurrencies } from "./utils/getCurrencies";
 
 const mock = [
@@ -37,6 +38,7 @@ function App() {
         <p> Loading... </p>
       ) : (
         <div>
+          <Header />
           <Create setData={setData} data={data} />
           <Display data={data} setData={setData} currencyMap={currencies} />
         </div>

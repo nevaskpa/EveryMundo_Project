@@ -2,13 +2,12 @@ import React, { useRef, useState } from "react";
 import Delete from "./Delete";
 import Edit from "./Edit";
 import { sortByCountries, sortByCurrencies } from "../utils/sort";
-import { compareCountries } from "../utils/compare";
 import ExportCSV from "./ExportCSV";
 
 function Display({ data, setData, currencyMap }) {
   const countrySort = useRef(false);
   const currencySort = useRef(false);
-  const [sortedData, setSortedData] = useState([...data]);
+  const [, setSortedData] = useState([...data]);
 
   const displayCurrency = (currency, format, position, amount, delimiter) => {
     let finalCurrency = "";

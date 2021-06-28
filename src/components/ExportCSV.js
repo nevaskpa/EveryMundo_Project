@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 
-function ExportCSV({ data, setData }) {
+function ExportCSV({ data }) {
   const [exportData, setExportData] = useState([]);
 
   useEffect(() => {

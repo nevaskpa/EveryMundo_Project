@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
 
 function Edit({ data, setData, index }) {
-  /*   const [amount, setAmount] = useState(data[index].amount);
-  const [country, setCountry] = useState(data[index].country);
-  const [currency, setCurrency] = useState(data[index].currency);
-  const [showCents, setShowCents] = useState(data[index].showCents);
-  const [format, setFormat] = useState(data[index].format);
-  const [position, setPosition] = useState(data[index].position);
-  const [delimiter, setDelimiter] = useState(data[index].delimiter); */
-
   const [amount, setAmount] = useState();
   const [country, setCountry] = useState("");
   const [currency, setCurrency] = useState("");
@@ -49,9 +45,9 @@ function Edit({ data, setData, index }) {
   return (
     <div>
       <button onClick={() => setEdit(true)}>Edit</button>
-      {/* {console.log("data from edit ", data, data[index])} */}
-      {edit ? (
-        <div>
+      <Dialog open={edit} onClose={() => setEdit(false)}>
+        <DialogTitle>Add New Entry</DialogTitle>
+        <DialogContent>
           <input
             type="text"
             onChange={(e) => setAmount(e.target.value)}
@@ -114,11 +110,11 @@ function Edit({ data, setData, index }) {
             </select>
           </label>
           <br />
+        </DialogContent>
+        <DialogActions>
           <button onClick={onSubmit}>Update</button>
-        </div>
-      ) : (
-        <></>
-      )}
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
