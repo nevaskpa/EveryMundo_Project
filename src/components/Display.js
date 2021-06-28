@@ -1,13 +1,23 @@
 import React, { useRef, useState } from "react";
 import Delete from "./Delete";
 import Edit from "./Edit";
-import { sortByCountries, sortByCurrencies } from "../utils/sort";
-import ExportCSV from "./ExportCSV";
+import {
+  sortByCountriesDesc,
+  sortByCountriesAsc,
+  sortByCurrenciesDesc,
+  sortByCurrenciesAsc,
+} from "../utils/sort";
+
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 
 function Display({ data, setData, currencyMap }) {
   const countrySort = useRef(false);
   const currencySort = useRef(false);
   const [, setSortedData] = useState([...data]);
+  const [isCountryAsc, setIsCountryAsc] = useState(true);
+  const [isCountrySort, setIsCountrySort] = useState(false);
+  const [isCurrencyAsc, setIsCurrencyAsc] = useState(true);
+  const [isCurrencySort, setIsCurrencySort] = useState(false);
 
   const displayCurrency = (currency, format, position, amount, delimiter) => {
     let finalCurrency = "";
@@ -32,11 +42,11 @@ function Display({ data, setData, currencyMap }) {
     }
   };
 
-  const handleSortByCountries = () => {
+  const handleSortByCountriesAsc = () => {
     let newData = [];
     countrySort.current = true;
     if (countrySort.current) {
-      newData = sortByCountries(data);
+      newData = sortByCountriesAsc(data);
       setSortedData([...newData]);
     } else {
       setSortedData([...data]);
@@ -44,11 +54,23 @@ function Display({ data, setData, currencyMap }) {
     setData(data);
   };
 
-  const handleSortByCurrencies = () => {
+  const handleSortByCountriesDesc = () => {
+    let newData = [];
+    countrySort.current = true;
+    if (countrySort.current) {
+      newData = sortByCountriesDesc(data);
+      setSortedData([...newData]);
+    } else {
+      setSortedData([...data]);
+    }
+    setData(data);
+  };
+
+  const handleSortByCurrenciesAsc = () => {
     let newData = [];
     currencySort.current = true;
     if (currencySort.current) {
-      newData = sortByCurrencies(data);
+      newData = sortByCurrenciesAsc(data);
       setSortedData([...newData]);
     } else {
       setSortedData([...data]);
@@ -56,49 +78,120 @@ function Display({ data, setData, currencyMap }) {
     setData(data);
   };
 
+  const handleSortByCurrenciesDesc = () => {
+    let newData = [];
+    currencySort.current = true;
+    if (currencySort.current) {
+      newData = sortByCurrenciesDesc(data);
+      setSortedData([...newData]);
+    } else {
+      setSortedData([...data]);
+    }
+    setData(data);
+  };
   return (
-    <table>
-      <tr>
-        <th>Amount</th>
-        <th>Country</th>
-        <th>Options</th>
-        <th>
-          <button onClick={handleSortByCountries}>Sort by Country</button>
-          <button onClick={handleSortByCurrencies}>Sort by Currency</button>
-          <ExportCSV data={data} />
-        </th>
-      </tr>
-      {data.map((obj, index) => (
-        <tr key={index}>
-          {obj.showCents ? (
-            <td>
-              {displayCurrency(
-                obj.currency,
-                obj.format,
-                obj.position,
-                obj.amount,
-                obj.delimiter
-              )}
-            </td>
-          ) : (
-            <td>
-              {displayCurrency(
-                obj.currency,
-                obj.format,
-                obj.position,
-                Math.trunc(obj.amount),
-                obj.delimiter
-              )}
-            </td>
-          )}
-          <td>{obj.country}</td>
-          <td>
-            <Edit data={data} setData={setData} index={index} />
-            <Delete data={data} setData={setData} index={index} />
-          </td>
-        </tr>
-      ))}
-    </table>
+    <div>
+      <br />
+      <div class="row d-flex justify-content-center">
+        <div class="table-responsive col-md-8">
+          <table class="table table-bordered table-striped table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Amount</th>
+                <th scope="col">
+                  <label
+                    onClick={() => {
+                      setIsCountrySort(true);
+                      setIsCountryAsc(!isCountryAsc);
+
+                      if (isCountryAsc) handleSortByCountriesAsc();
+                      else handleSortByCountriesDesc();
+                    }}
+                  >
+                    Country
+                  </label>
+                  {!isCountrySort || data.length == 0 ? (
+                    <FaSort />
+                  ) : isCountryAsc ? (
+                    <FaSortDown />
+                  ) : (
+                    <FaSortUp />
+                  )}
+                </th>
+                <th scope="col">
+                  <label
+                    onClick={() => {
+                      setIsCurrencySort(true);
+                      setIsCurrencyAsc(!isCurrencyAsc);
+
+                      if (isCurrencyAsc) handleSortByCurrenciesAsc();
+                      else handleSortByCurrenciesDesc();
+                    }}
+                  >
+                    Currency
+                  </label>
+                  {!isCurrencySort || data.length == 0 ? (
+                    <FaSort />
+                  ) : isCurrencyAsc ? (
+                    <FaSortDown />
+                  ) : (
+                    <FaSortUp />
+                  )}
+                </th>
+                <th scope="col">Show Cents</th>
+                <th scope="col">Position</th>
+                <th scope="col">Format</th>
+                <th scope="col">Delimiter</th>
+                <th scope="col">Options</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((obj, index) => (
+                <tr key={index}>
+                  {obj.showCents ? (
+                    <td>
+                      {displayCurrency(
+                        obj.currency,
+                        obj.format,
+                        obj.position,
+                        obj.amount,
+                        obj.delimiter
+                      )}
+                    </td>
+                  ) : (
+                    <td>
+                      {displayCurrency(
+                        obj.currency,
+                        obj.format,
+                        obj.position,
+                        Math.trunc(obj.amount),
+                        obj.delimiter
+                      )}
+                    </td>
+                  )}
+                  <td>{obj.country}</td>
+                  <td>{obj.currency}</td>
+                  <td>{obj.showCents.toString()}</td>
+                  <td>{obj.position}</td>
+                  <td>{obj.format}</td>
+                  <td>{obj.delimiter}</td>
+                  <td>
+                    <div class="btn-group">
+                      <div class="col-6 text-left">
+                        <Edit data={data} setData={setData} index={index} />
+                      </div>
+                      <div class="col-6 text-right">
+                        <Delete data={data} setData={setData} index={index} />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   );
 }
 

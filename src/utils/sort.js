@@ -1,9 +1,22 @@
-import { compareCountries, compareCurrencies } from "./compare";
+import {
+  compareCountriesAsc,
+  compareCountriesDesc,
+  compareCurrenciesAsc,
+  compareCurrenciesDesc,
+} from "./compare";
 
-export function sortByCountries(data) {
-  return data.sort(compareCountries);
+export function sortByCountriesAsc(data) {
+  return data.sort(compareCountriesAsc);
 }
 
-export function sortByCurrencies(data) {
-  return data.sort(compareCurrencies);
+export function sortByCountriesDesc(data) {
+  return data.sort(compareCountriesDesc);
+}
+
+export function sortByCurrenciesAsc(data) {
+  return data.sort(compareCurrenciesAsc);
+}
+
+export function sortByCurrenciesDesc(data) {
+  return data.sort(compareCurrenciesDesc);
 }

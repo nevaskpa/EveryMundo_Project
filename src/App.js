@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import Create from "./components/Create";
+
 import Display from "./components/Display";
 import Header from "./components/Header";
 import { getCurrencies } from "./utils/getCurrencies";
@@ -38,8 +38,7 @@ function App() {
         <p> Loading... </p>
       ) : (
         <div>
-          <Header />
-          <Create setData={setData} data={data} />
+          <Header data={data} setData={setData} />
           <Display data={data} setData={setData} currencyMap={currencies} />
         </div>
       )}

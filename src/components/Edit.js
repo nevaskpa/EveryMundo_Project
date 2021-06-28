@@ -44,75 +44,111 @@ function Edit({ data, setData, index }) {
 
   return (
     <div>
-      <button onClick={() => setEdit(true)}>Edit</button>
+      <button class="btn btn-secondary" onClick={() => setEdit(true)}>
+        Edit
+      </button>
       <Dialog open={edit} onClose={() => setEdit(false)}>
-        <DialogTitle>Add New Entry</DialogTitle>
+        <DialogTitle class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+          Edit Record
+        </DialogTitle>
         <DialogContent>
-          <input
-            type="text"
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="Amount"
-            value={amount}
-          />{" "}
-          {console.log(amount, data[index].amount, index)}
-          <input
-            type="text"
-            onChange={(e) => setCurrency(e.target.value)}
-            placeholder="Currency"
-            value={currency}
-          />
-          <input
-            type="text"
-            onChange={(e) => setCountry(e.target.value)}
-            placeholder="Country"
-            value={country}
-          />
-          <br />
-          <label>
-            {" "}
-            Set cents
-            <input
-              type="checkbox"
-              checked={showCents}
-              onChange={(e) => setShowCents(e.target.checked)}
-            />
-          </label>
-          <label>
-            {" "}
-            Show currency as:{" "}
-            <select value={format} onChange={(e) => setFormat(e.target.value)}>
-              <option value="symbol">Symbol</option>
-              <option value="code">Code</option>
-            </select>
-          </label>
-          <br />
-          <label>
-            {" "}
-            Currency position:{" "}
-            <select
-              value={position}
-              onChange={(e) => setPosition(e.target.value)}
-            >
-              <option value="before">Before</option>
-              <option value="after">After</option>
-            </select>
-          </label>
-          <br />
-          <label>
-            {" "}
-            Display Format:{" "}
-            <select
-              value={delimiter}
-              onChange={(e) => setDelimiter(e.target.value)}
-            >
-              <option value="comma">#,###.##</option>
-              <option value="dot">#.###,##</option>
-            </select>
-          </label>
-          <br />
+          <form class="row g-3">
+            <div class="col-md-4">
+              <label for="amount" class="form-label">
+                Amount
+              </label>
+              <input
+                type="text"
+                onChange={(e) => setAmount(e.target.value)}
+                value={amount}
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-4">
+              <label for="currency" class="form-label">
+                Currency
+              </label>
+              <input
+                type="text"
+                onChange={(e) => setCurrency(e.target.value)}
+                value={currency}
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-4">
+              <label for="country" class="form-label">
+                Country
+              </label>
+              <input
+                type="text"
+                onChange={(e) => setCountry(e.target.value)}
+                value={country}
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-4">
+              <label for="format" class="form-label">
+                Format
+              </label>
+              <select
+                value={format}
+                onChange={(e) => setFormat(e.target.value)}
+                class="form-select"
+              >
+                <option value="symbol">Symbol</option>
+                <option value="code">Code</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="position" class="form-label">
+                Position
+              </label>
+              <select
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+                class="form-select"
+              >
+                <option value="before">Before</option>
+                <option value="after">After</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label for="delimiter" class="form-label">
+                Delimiter
+              </label>
+              <select
+                value={delimiter}
+                onChange={(e) => setDelimiter(e.target.value)}
+                class="form-select"
+              >
+                <option value="comma">#,###.##</option>
+                <option value="dot">#.###,##</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  checked={showCents}
+                  onChange={(e) => setShowCents(e.target.checked)}
+                  class="form-check-input"
+                />
+                <label class="form-check-label" for="gridCheck">
+                  Show Cents
+                </label>
+              </div>
+            </div>
+          </form>
         </DialogContent>
         <DialogActions>
-          <button onClick={onSubmit}>Update</button>
+          <div class="col-2 text-right">
+            <div>
+              <button onClick={onSubmit} class="btn btn-primary">
+                Submit
+              </button>
+            </div>
+          </div>
         </DialogActions>
       </Dialog>
     </div>

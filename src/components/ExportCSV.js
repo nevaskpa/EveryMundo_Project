@@ -15,9 +15,9 @@ function ExportCSV({ data }) {
         "Country",
         "Currency",
         "Show Cents",
-        "Position",
-        "Format",
-        "Delimiter",
+        "Currency Position",
+        "Currency Format",
+        "Currency Delimiter",
       ],
     ];
     let i;
@@ -38,7 +38,7 @@ function ExportCSV({ data }) {
   return (
     <div>
       <CSVLink filename="Settings.csv" data={getCsvData()}>
-        Click here to download!
+        Download!
       </CSVLink>
     </div>
   );
