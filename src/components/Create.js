@@ -4,16 +4,18 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 
-function Create({ data, setData }) {
+function Create({ data, setData, currencyMap, countries }) {
   const [amount, setAmount] = useState();
-  const [country, setCountry] = useState("");
-  const [currency, setCurrency] = useState("");
+  const [country, setCountry] = useState("Afghanistan");
+  const [currency, setCurrency] = useState("AED");
   const [showCents, setShowCents] = useState(false);
   const [format, setFormat] = useState("symbol");
   const [position, setPosition] = useState("before");
   const [delimiter, setDelimiter] = useState("comma");
 
   const [add, setAdd] = useState(false);
+
+  const allCurrencies = [...currencyMap.keys()].sort();
 
   const onSubmit = () => {
     let newData = [
@@ -60,23 +62,33 @@ function Create({ data, setData }) {
               <label for="currency" class="form-label">
                 Currency
               </label>
-              <input
-                type="text"
-                onChange={(e) => setCurrency(e.target.value)}
+              <select
                 value={currency}
-                class="form-control"
-              />
+                onChange={(e) => setCurrency(e.target.value)}
+                class="form-select"
+              >
+                {allCurrencies.map((item, index) => (
+                  <option key={index} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
             </div>
             <div class="col-md-4">
               <label for="country" class="form-label">
                 Country
               </label>
-              <input
-                type="text"
-                onChange={(e) => setCountry(e.target.value)}
+              <select
                 value={country}
-                class="form-control"
-              />
+                onChange={(e) => setCountry(e.target.value)}
+                class="form-select"
+              >
+                {countries.map((item, index) => (
+                  <option key={index} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
             </div>
             <div class="col-md-4">
               <label for="format" class="form-label">

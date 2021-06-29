@@ -10,7 +10,7 @@ import {
 
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 
-function Display({ data, setData, currencyMap }) {
+function Display({ data, setData, currencyMap, countries }) {
   const countrySort = useRef(false);
   const currencySort = useRef(false);
   const [, setSortedData] = useState([...data]);
@@ -110,7 +110,7 @@ function Display({ data, setData, currencyMap }) {
                   >
                     Country
                   </label>
-                  {!isCountrySort || data.length == 0 ? (
+                  {!isCountrySort || data.length === 0 ? (
                     <FaSort />
                   ) : isCountryAsc ? (
                     <FaSortDown />
@@ -130,7 +130,7 @@ function Display({ data, setData, currencyMap }) {
                   >
                     Currency
                   </label>
-                  {!isCurrencySort || data.length == 0 ? (
+                  {!isCurrencySort || data.length === 0 ? (
                     <FaSort />
                   ) : isCurrencyAsc ? (
                     <FaSortDown />
@@ -178,7 +178,13 @@ function Display({ data, setData, currencyMap }) {
                   <td>
                     <div class="btn-group">
                       <div class="col-6 text-left">
-                        <Edit data={data} setData={setData} index={index} />
+                        <Edit
+                          data={data}
+                          setData={setData}
+                          index={index}
+                          currencyMap={currencyMap}
+                          countries={countries}
+                        />
                       </div>
                       <div class="col-6 text-right">
                         <Delete data={data} setData={setData} index={index} />

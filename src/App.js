@@ -4,10 +4,11 @@ import "./App.css";
 import Display from "./components/Display";
 import Header from "./components/Header";
 import { getCurrencies } from "./utils/getCurrencies";
+import { getCountries } from "./utils/getCountries";
 
 const mock = [
   {
-    country: "USA",
+    country: "United States of America",
     amount: 1230.45,
     currency: "USD",
     showCents: false,
@@ -21,6 +22,7 @@ function App() {
   const [currencies, setCurrencies] = useState(new Map());
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(mock);
+  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
     const getCurrencyMap = async () => {
@@ -29,6 +31,16 @@ function App() {
     };
 
     getCurrencyMap();
+  }, []);
+
+  useEffect(() => {
+    const getCountryList = async () => {
+      const result = await getCountries();
+      setCountries(result);
+    };
+
+    getCountryList();
+    console.log(countries);
     setIsLoading(false);
   }, []);
 
@@ -38,8 +50,18 @@ function App() {
         <p> Loading... </p>
       ) : (
         <div>
-          <Header data={data} setData={setData} />
-          <Display data={data} setData={setData} currencyMap={currencies} />
+          <Header
+            data={data}
+            setData={setData}
+            currencyMap={currencies}
+            countries={countries}
+          />
+          <Display
+            data={data}
+            setData={setData}
+            currencyMap={currencies}
+            countries={countries}
+          />
         </div>
       )}
     </div>

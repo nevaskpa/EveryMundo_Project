@@ -2,7 +2,7 @@ import React from "react";
 import Create from "./Create";
 import ExportCSV from "./ExportCSV";
 
-function Header({ data, setData }) {
+function Header({ data, setData, currencyMap, countries }) {
   return (
     <div class="container">
       <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -15,7 +15,12 @@ function Header({ data, setData }) {
 
         <ul class="nav nav-pills">
           <li class="nav-item">
-            <Create data={data} setData={setData} />
+            <Create
+              data={data}
+              setData={setData}
+              currencyMap={currencyMap}
+              countries={countries}
+            />
           </li>
           <li class="nav-item">
             <a class="nav-link">
